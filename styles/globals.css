@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+.slick-dots li button:before {
+    font-size: 12px !important;
+    color: #0f3460;
+    border-radius: 50%;
+    line-height: 20px !important;
+    padding: 10px;
+    position: absolute;
+}
+
+@layer base {
+    body{
+        @apply bg-[#f6f9fc]
+    }
+}

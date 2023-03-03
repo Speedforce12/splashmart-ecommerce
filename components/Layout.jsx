@@ -7,10 +7,10 @@ import Header from "./Header";
 const Layout = ({ children }) => {
   const router = useRouter()
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col min-h-screen'>
       {router.pathname !== "/auth/register" &&
         router.pathname !== "/auth/login" && <Header path={router.route} />}
-      <div>{children}</div>
+      <div >{children}</div>
       {router.pathname !== "/auth/register" &&
         router.pathname !== "/auth/login" && <Footer path={router.route} />}
     </div>
