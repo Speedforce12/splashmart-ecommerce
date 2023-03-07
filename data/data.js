@@ -90,37 +90,36 @@ export const ServiceData = [
   },
 ];
 
-export const NewArrival = [
+export const NewArrivalData = [
   {
     cover: "/images/arrivals/arrivals1.png",
-    name: "Sunglass",
+    name: "Headphones",
     price: "150",
   },
   {
     cover: "/images/arrivals/arrivals2.png",
-    name: "Makeup",
+    name: "Headphones",
     price: "250",
   },
   {
     cover: "/images/arrivals/arrivals3.png",
     name: "Smart Watch",
-    price: "50",
+    price: "250",
   },
   {
     cover: "/images/arrivals/arrivals4.png",
-    name: "Lipstick",
-    price: "15",
+    name: "Smart Phone",
+    price: "650",
   },
   {
     cover: "/images/arrivals/arrivals5.png",
-    name: "Green Plant",
-    price: "10",
+    name: "Apple Iphone",
+    price: "895",
   },
   {
     cover: "/images/arrivals/arrivals6.png",
-    name: "Bonsai tree",
+    name: "Classic Watch",
     price: "400",
   },
 ];
 
-export default NewArrival;

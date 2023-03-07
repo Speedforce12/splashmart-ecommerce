@@ -1,9 +1,5 @@
 import connectDB from "@/database/connection";
-import {
-  createProduct,
-  getProduct,
-  getProducts,
-} from "@/database/productControllers";
+import { getProduct } from "@/database/productControllers";
 
 export default function handler(req, res) {
   connectDB().catch(() => {
@@ -15,10 +11,6 @@ export default function handler(req, res) {
   switch (method) {
     case "GET":
       getProduct(req, res);
-      break;
-
-    case "POST":
-      createProduct(req, res);
       break;
 
     default:

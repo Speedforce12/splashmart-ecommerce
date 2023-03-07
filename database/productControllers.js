@@ -26,14 +26,13 @@ export async function getProducts(req, res) {
 
 export async function getProduct(req, res) {
   try {
-    const { productId } = req.params;
-    const product = await Product.findById(productId);
+    const product = await Product.findById(req.query.id);
     if (!product) {
-      res.status(400).json({ error: "Product doesn't Exist" });
+      res.status(404).json({ error: "Product not found!"  });
     }
 
-    res.status(200).json({ product });
+    res.status(200).json(product)
   } catch (error) {
-    res.status(404).json({ error: "Error fetching menu Item data" });
+    res.status(404).json({ error: "Error fetching Product data" });
   }
 }

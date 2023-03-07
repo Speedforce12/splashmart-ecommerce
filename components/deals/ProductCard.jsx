@@ -8,7 +8,7 @@ import { useState } from "react";
 const ProductCard = ({flash}) => {
   const [favorite, setFavorite] = useState(false)
   return (
-    <div className='h-68 group relative w-64  cursor-pointer rounded-md bg-white  p-3 drop-shadow-md'>
+    <div className='h-68 mb-2 group relative w-64  cursor-pointer rounded-md bg-white  p-3 drop-shadow-md'>
       <div className='absolute right-5 flex flex-col space-y-4 opacity-0 transition duration-500 group-hover:opacity-100 translate-x-5 group-hover:translate-x-0'>
         {favorite ? (
           <FaHeart

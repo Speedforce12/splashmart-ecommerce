@@ -9,3 +9,24 @@ export const createProduct = async (data) => {
     return error;
   }
 };
+
+export const getProduct = async (id) => {
+  try {
+    const response = await baseURL.get(`/product/${id}`);
+    const product = response.data;
+    return product;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const getProducts = async () => {
+  try {
+    const response = await baseURL.get("/products");
+    const products = response.data;
+    return products
+  } catch (error) {
+    return error;
+  }
+}

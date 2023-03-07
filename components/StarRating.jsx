@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-const StarRating = () => {
-  const [rating, setRating] = useState(4);
+const StarRating = ({stars}) => {
+  const [rating, setRating] = useState({stars});
   const [hover, setHover] = useState(0);
   return (
     <div className='star-rating'>

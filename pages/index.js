@@ -2,6 +2,7 @@ import Head from "next/head";
 import Carousel from "@/components/herosection/Carousel";
 import FlashDeal from "@/components/deals/FlashDeal";
 import ServiceCard from "@/components/ServiceCard";
+import NewArrival from "@/components/newArrival/NewArrival";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <Carousel />
         <ServiceCard />
         <FlashDeal />
+        <NewArrival/>
       </main>
     </>
   );
