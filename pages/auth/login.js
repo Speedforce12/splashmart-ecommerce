@@ -7,6 +7,8 @@ import Link from "next/link";
 import { MdOutlineAlternateEmail, MdSecurity } from "react-icons/md";
 import { IoLogInOutline } from "react-icons/io5";
 import { ClipLoader } from "react-spinners";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
@@ -24,6 +26,7 @@ const schema = yup.object({
 
 const login = () => {
   const [visible, setVisible] = useState(false);
+  const router = useRouter()
 
   const {
     register,
@@ -33,14 +36,15 @@ const login = () => {
     resolver: yupResolver(schema),
     mode: "all",
   });
-  const onSubmit = (data) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 2000);
+  const onSubmit = async (data) => {
+    const user = await signIn("credentials", {
+      password: data.password,
+      email: data.email,
+      redirect: true,
+      callbackUrl: "/"
     });
-
-    console.log(data);
+    
+    console.log(user)
   };
 
   return (
@@ -108,7 +112,9 @@ const login = () => {
             </div>
           </div>
 
-          <button disabled={isSubmitting} className='mt-4 flex w-full items-center justify-center gap-4 rounded-md bg-teal-300 py-3  px-2 font-medium uppercase transition duration-200 hover:bg-teal-500 hover:font-bold hover:text-white'>
+          <button
+            disabled={isSubmitting}
+            className='mt-4 flex w-full items-center justify-center gap-4 rounded-md bg-teal-300 py-3  px-2 font-medium uppercase transition duration-200 hover:bg-teal-500 hover:font-bold hover:text-white'>
             {isSubmitting ? (
               <>
                 <ClipLoader color='#ffffff' size={30} />

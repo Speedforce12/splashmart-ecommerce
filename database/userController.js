@@ -1,8 +1,7 @@
 import User from "./models/user";
 import { hash } from "bcrypt";
 import sendMail from "@/helper/sendMail";
-import cryptoRandomString from "crypto-random-string";
-import { sign } from "jsonwebtoken";
+import randomstring from "randomstring";
 
 export async function createUser(req, res) {
   try {
@@ -11,7 +10,7 @@ export async function createUser(req, res) {
       res.status(400).json({ error: "No Data Provided" });
     }
 
-    const { username, password, email } = req.body;
+    const { name, password, email } = req.body;
 
     const user = await User.findOne({ email: email });
 
@@ -20,35 +19,25 @@ export async function createUser(req, res) {
       res.status(409).json({ error: "User already exists" });
     }
 
-    // create a unique token to identify the user
-
+    const token = randomstring.generate({ length: 36 ,charset: "hex"});
     const newUser = await User.create({
-      username: username,
+      name: name,
       email: email,
       password: await hash(password, 16),
+      verificationToken: token,
     });
 
-    const token = sign({ _id: newUser._id }, process.env.NEXTAUTH_SECRET, {
-      expiresIn: "1h",
-    });
+    try {
+      sendMail(email, token);
+    } catch (error) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({ message: "Error sending verification email" });
+    }
 
-    newUser.emailToken = token;
-    await newUser.save();
-
-    const link = `http://localhost:3000/confirmation/${token}`;
-    const message = `<div>Click on the link below to verify your email, if the link is not working then please paste into the browser.</div></br>
-    <div><a href=${link}>Verify Email</a></div>`;
-
-    await sendMail({
-      to: newUser.email,
-      subject: "Confirm Email",
-      text: message,
-    });
-    res.status(201).json({
-      message: `Email sent to ${newUser.email}, please check your email`,
-    });
+    res.status(201).json(newUser);
   } catch (error) {
-    console.error(error);
-    res.status(404).json({ error: "Error Creating User" });
+    res.status(500).json({ error: "Error Creating User" });
   }
 }

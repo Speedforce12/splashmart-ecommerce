@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/cartReducer";
 import { useRef } from "react";
 import Reviews from "@/components/Reviews";
+import {BsCart4} from "react-icons/bs"
 
 const productDetail = ({ product }) => {
   const dispatch = useDispatch();
@@ -55,14 +56,14 @@ const productDetail = ({ product }) => {
           <div className='mt-2 flex items-center space-x-3'>
             <div className='flex items-center gap-3'>
               <StarRatings
-                rating={2}
+                rating={product.ratings}
                 starRatedColor='#ffb829'
                 numberOfStars={5}
                 starDimension='20px'
                 starSpacing='2px'
                 name='rating'
               />
-              <p className='text-[#ffb829]'>4.5</p>
+              <p className='text-[#ffb829]'>{product.ratings}</p>
             </div>
 
             <div className='flex items-center justify-between gap-2'>
@@ -77,8 +78,9 @@ const productDetail = ({ product }) => {
             <p className='text-gray-700'>{product.description}</p>
             <div>
               <button
-                className='rounded-md bg-blue-800 py-2.5 px-3 text-white'
+                className='rounded-md bg-blue-800 py-2.5 px-3 text-white flex items-center gap-3'
                 onClick={() => dispatch(addToCart(product))}>
+                <BsCart4 className="h-6 w-6"/>
                 Add to cart
               </button>
             </div>

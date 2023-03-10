@@ -3,20 +3,25 @@ import { CgShoppingBag } from "react-icons/cg";
 import { FcShop } from "react-icons/fc";
 import Image from "next/image";
 import Avatar from "../public/images/avatar.png";
-import {BiSearch} from "react-icons/bi"
+import { BiSearch } from "react-icons/bi";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
+  const { cartmart } = useSelector((state) => state.cartmart);
+  const [showMenu, setShowMenu] = useState(false)
+  const { data: session } = useSession()
 
-  const {cartmart} = useSelector((state)=> state.cartmart)
-
-     const getTotalQuantity = () => {
-       return cartmart.reduce(
-         (accumulator, item) => accumulator + item.quantity,
-         0
-       );
-  };
+  console.log(session)
   
+  const getTotalQuantity = () => {
+    return cartmart.reduce(
+      (accumulator, item) => accumulator + item.quantity,
+      0
+    );
+  };
+
   return (
     <div className='sticky top-0 left-0 z-20 w-full'>
       <div className='flex items-center justify-between bg-white px-5 py-4 shadow-md'>
@@ -50,12 +55,32 @@ const Header = () => {
             </div>
           </Link>
 
-          <div className='rounded-full transition-all duration-200 ease-in-out hover:scale-110 hover:ring-2 hover:ring-teal-300'>
-            <Image
-              alt=''
-              className='h-9 w-9 cursor-pointer rounded-full object-cover'
-              src={Avatar}
-            />
+          <div className='relative' onClick={() => setShowMenu(!showMenu)}>
+            <div className='rounded-full transition-all duration-200 ease-in-out hover:scale-110 hover:ring-2 hover:ring-teal-300'>
+              <Image
+                alt=''
+                className='h-9 w-9 cursor-pointer rounded-full object-cover'
+                src={Avatar}
+              />
+            </div>
+            <div
+              className={`absolute top-16 right-1 z-30 w-64 rounded-md bg-white ${
+                showMenu ? "block" : "hidden"
+              }`}>
+              <ul className='space-y-2 rounded-md border-2 p-3 shadow-md'>
+                <li className='cursor-pointer rounded-md p-2 text-sm font-medium text-black hover:bg-purple-100'>
+                  {session?.user?.email}
+                </li>
+                <li className='cursor-pointer rounded-md p-2 text-sm font-medium text-black hover:bg-purple-100'>
+                  <Link href="/me">Profile</Link>
+                </li>
+                <li
+                  className='cursor-pointer rounded-md p-2 text-sm font-medium text-black hover:bg-purple-100'
+                  onClick={() => signOut()}>
+                  Log Out
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

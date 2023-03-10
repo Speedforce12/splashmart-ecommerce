@@ -8,6 +8,8 @@ import { useState } from "react";
 import { TiUserAddOutline } from "react-icons/ti";
 import Link from "next/link";
 import ClipLoader from "react-spinners/ClipLoader";
+import { createUser } from "@/helper/user";
+import { useRouter } from "next/router";
 
 const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
@@ -31,25 +33,25 @@ const schema = yup.object({
 const register = () => {
   const [visible, setVisible] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
-
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "all",
   });
-  const onSubmit = (data) => {
-    
-     return new Promise((resolve) => {
-       setTimeout(() => {
-         resolve();
-       }, 2000);
-     });
-    console.log(data);
-  }
+  const onSubmit = async (data) => {
+    const user = await createUser(data);
+
+    if (user) {
+      router.push("/verify/verify-request");
+    }
+
+    console.log(user);
+  };
 
   return (
     <div className='flex h-screen w-full flex-col items-center justify-center px-4'>
@@ -69,7 +71,7 @@ const register = () => {
               className={` ${
                 errors.username?.message ? "text-rose-500" : "text-black"
               }  mb-1.5 block text-sm font-semibold text-opacity-70`}>
-              {errors.username?.message ? errors.username.message : "Username"}
+              {errors.username?.message ? errors.username.message : "Name"}
             </label>
             <div className='flex items-center rounded-md bg-white p-4'>
               <FaRegUserCircle className='h-5 w-5' />

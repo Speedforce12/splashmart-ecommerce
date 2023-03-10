@@ -3,8 +3,20 @@ import Carousel from "@/components/herosection/Carousel";
 import FlashDeal from "@/components/deals/FlashDeal";
 import ServiceCard from "@/components/ServiceCard";
 import NewArrival from "@/components/newArrival/NewArrival";
+import { useSession } from "next-auth/react";
+import Loader from "@/components/Loader";
 
 export default function Home() {
+  const { status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -17,7 +29,7 @@ export default function Home() {
         <Carousel />
         <ServiceCard />
         <FlashDeal />
-        <NewArrival/>
+        <NewArrival />
       </main>
     </>
   );

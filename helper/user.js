@@ -1,12 +1,12 @@
 import { baseURL } from "./axios";
 
-
 export const createUser = async (data) => {
-try {
+  try {
     const res = await baseURL.post("/auth/user", data);
-    const user = await res.data
-    return user
-} catch (error) {
-    return Promise.reject(error);
-}
-}
+    return res.data
+  } catch (err) {
+    if (err.response) {
+      return err.response.data;
+    }
+  }
+};

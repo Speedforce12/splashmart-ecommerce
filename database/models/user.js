@@ -2,10 +2,14 @@ import { Schema, model, models } from "mongoose";
 
 const userSchema = new Schema(
   {
-    username: String,
-    email: String,
-    password: String,
-    emailToken: String,
+    username: { type: String },
+    email: { type: String },
+    role: { type: String, default: "customer" },
+    password: {
+      type: String,
+    },
+    isVerified: { type: Boolean, default: false },
+    verificationToken: String,
   },
   { timestamps: true }
 );
