@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
         router.pathname !== "/auth/login" && <Header path={router.route} />}
       <div >{children}</div>
       {router.pathname !== "/auth/register" &&
-        router.pathname !== "/auth/login" && <Footer path={router.route} />}
+        router.pathname !== "/auth/login" && router.pathname.startsWith("/me")  === false && <Footer path={router.route} />}
     </div>
   );
 };

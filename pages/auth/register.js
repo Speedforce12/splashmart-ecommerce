@@ -15,7 +15,7 @@ const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
 
 const schema = yup.object({
-  username: yup.string().required(),
+  name: yup.string().required(),
   email: yup.string().email().required(),
   password: yup
     .string()
@@ -51,6 +51,7 @@ const register = () => {
     }
 
     console.log(user);
+    console.log(data);
   };
 
   return (
@@ -67,19 +68,19 @@ const register = () => {
           </p>
           <div className='mt-7 w-full'>
             <label
-              htmlFor='username'
+              htmlFor='name'
               className={` ${
-                errors.username?.message ? "text-rose-500" : "text-black"
+                errors.name?.message ? "text-rose-500" : "text-black"
               }  mb-1.5 block text-sm font-semibold text-opacity-70`}>
-              {errors.username?.message ? errors.username.message : "Name"}
+              {errors.name?.message ? errors.name.message : "Name"}
             </label>
             <div className='flex items-center rounded-md bg-white p-4'>
               <FaRegUserCircle className='h-5 w-5' />
               <input
                 type='text'
-                id='username'
-                {...register("username")}
-                placeholder='@username'
+                id='name'
+                {...register("name")}
+                placeholder='@name'
                 className='ml-3 h-7 w-full bg-transparent indent-2 focus:outline-none'
               />
             </div>

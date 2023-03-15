@@ -1,7 +1,7 @@
+import { deleteAddress, getAddress } from "@/database/addressController";
 import connectDB from "@/database/connection";
-import { createUser } from "@/database/userController";
 
-export default function (req, res) {
+export default function handler(req, res) {
   connectDB().catch(() => {
     res.status(500).json({ error: "Error in Database connect" });
   });
@@ -9,8 +9,12 @@ export default function (req, res) {
   const { method } = req;
 
   switch (method) {
-    case "POST":
-      createUser(req, res);
+    case "GET":
+      getAddress(req, res);
+      break;
+
+    case "DELETE":
+      deleteAddress(req, res);
       break;
 
     default:

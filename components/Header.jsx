@@ -13,7 +13,6 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const { data: session } = useSession()
 
-  console.log(session)
   
   const getTotalQuantity = () => {
     return cartmart.reduce(
@@ -60,7 +59,8 @@ const Header = () => {
               <Image
                 alt=''
                 className='h-9 w-9 cursor-pointer rounded-full object-cover'
-                src={Avatar}
+                width={100} height={100}
+                src={ session?.user?.image ? session?.user?.image :  Avatar}
               />
             </div>
             <div
@@ -72,11 +72,11 @@ const Header = () => {
                   {session?.user?.email}
                 </li>
                 <li className='cursor-pointer rounded-md p-2 text-sm font-medium text-black hover:bg-purple-100'>
-                  <Link href="/me">Profile</Link>
+                  <Link href='/me'>Profile</Link>
                 </li>
                 <li
                   className='cursor-pointer rounded-md p-2 text-sm font-medium text-black hover:bg-purple-100'
-                  onClick={() => signOut()}>
+                  onClick={() => signOut({callbackUrl: "/auth/login"})}>
                   Log Out
                 </li>
               </ul>
@@ -89,3 +89,5 @@ const Header = () => {
 };
 
 export default Header;
+
+

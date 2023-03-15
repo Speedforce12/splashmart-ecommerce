@@ -1,32 +1,16 @@
 import ShippingAddressRadio from "@/components/ShippingAddressRadio";
+import { getUser } from "@/helper/user";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { MdOutlineAdd } from "react-icons/md";
 
-const shipping = () => {
-  const [addresses, setAddresses] = useState([
-    {
-      id: 1,
-      street: "123 Main St",
-      city: "Anytown",
-      state: "CA",
-      zip: "12345",
-      country: "United States",
-    },
-    {
-      id: 2,
-      street: "456 Elm St",
-      city: "Othertown",
-      state: "NY",
-      zip: "67890",
-      country: "United States",
-    },
-  ]);
+const shipping = ({ user }) => {
+  const router = useRouter();
 
-  const [selectedAddress, setSelectedAddress] = useState(addresses[0]);
-
-  const handleAddressChange = (address) => {
-    setSelectedAddress(address);
-  };
+  const [selectedAddress, setSelectedAddress] = useState(
+    user?.shippingAddress[0]
+  );
 
   console.log(selectedAddress);
 
@@ -40,25 +24,28 @@ const shipping = () => {
               Shipping Information
             </h2>
             <div className='mb-5 space-y-5'>
-              {addresses.map((address) => (
+              {user?.shippingAddress?.map((address) => (
                 <ShippingAddressRadio
-                  key={address.id}
+                  key={address._id}
                   address={address}
-                  isSelected={address.id === selectedAddress.id}
-                  onChange={handleAddressChange}
+                  isSelected={address._id === selectedAddress._id}
+                  onChange={() => setSelectedAddress(address)}
                 />
               ))}
             </div>
 
             <div>
-              <button className='flex items-center rounded-md  border-2 bg-white  py-3 px-3  font-semibold text-blue-500'>
+              <button
+                onClick={() => router.push("/address/create")}
+                href='/address/create'
+                className='flex items-center rounded-md  border-2 bg-white  py-3 px-3  font-semibold text-blue-500'>
                 <MdOutlineAdd className='h-6 w-6' />
                 Add new address
               </button>
             </div>
 
             <div className='ml-auto space-x-5'>
-              <button className='border-[1px] py-2 px-3 rounded-md font-medium text-black'>
+              <button className='rounded-md border-[1px] py-2 px-3 font-medium text-black'>
                 Back
               </button>
               <button className='rounded-md bg-green-500 py-2 px-3 font-medium text-white'>
@@ -76,3 +63,16 @@ const shipping = () => {
 };
 
 export default shipping;
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  const id = session?.user?._id;
+  const user = await getUser(id);
+
+  return {
+    props: {
+      user,
+    },
+  };
+}

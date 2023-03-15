@@ -2,14 +2,17 @@ import { Schema, model, models } from "mongoose";
 
 const userSchema = new Schema(
   {
-    username: { type: String },
-    email: { type: String },
+    name: String,
+    email: String,
     role: { type: String, default: "customer" },
-    password: {
-      type: String,
-    },
+    password: String,
+    avatar: String,
     isVerified: { type: Boolean, default: false },
     verificationToken: String,
+    shippingAddress: [{
+      type: Schema.Types.ObjectId,
+      ref: "Shipping",
+    }],
   },
   { timestamps: true }
 );

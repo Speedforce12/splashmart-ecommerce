@@ -2,6 +2,12 @@ import { Schema, models, model } from "mongoose";
 
 const shippingSchema = new Schema(
   {
+    owner: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     street: String,
     city: String,
     state: String,

@@ -11,7 +11,7 @@ const ShippingAddressRadio = ({ address, isSelected, onChange }) => {
       />
       <div className='ml-3 flex flex-col' onClick={() => onChange(address)}>
         <div className='space-y-1'>
-          <h3 className='text-sm font-semibold text-gray-700'>
+          <h3 className='text-xs font-semibold text-gray-700'>
             {address.street}
           </h3>
           <p className='text-xs font-semibold text-gray-400'>
@@ -20,7 +20,10 @@ const ShippingAddressRadio = ({ address, isSelected, onChange }) => {
           <p className='text-xs font-semibold text-gray-400'>
             {address.country}
           </p>
-          <p className='text-xs font-semibold text-gray-400'>2085378260</p>
+          <p className='text-xs font-semibold text-gray-400'>
+            {" "}
+            {address.phone}
+          </p>
         </div>
       </div>
     </label>

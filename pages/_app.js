@@ -1,20 +1,23 @@
-import Layout from '@/components/Layout'
-import { persistor, store } from '@/redux/store';
-import '@/styles/globals.css'
-import { Poppins } from '@next/font/google';
-import {SessionProvider} from "next-auth/react"
-import { Provider } from 'react-redux';
-import { HashLoader } from 'react-spinners';
-import { ToastContainer } from 'react-toastify';
-import { PersistGate } from 'redux-persist/integration/react';
+import Layout from "@/components/Layout";
+import { persistor, store } from "@/redux/store";
+import "@/styles/globals.css";
+import { Poppins } from "@next/font/google";
+import { SessionProvider } from "next-auth/react";
+import { Provider } from "react-redux";
+import { HashLoader } from "react-spinners";
+import { ToastContainer } from "react-toastify";
+import { PersistGate } from "redux-persist/integration/react";
+import "react-toastify/dist/ReactToastify.css";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"]
-})
+  subsets: ["latin"],
+});
 
-
-export default function App({ Component, pageProps: { session, ...pageProps } }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
@@ -27,7 +30,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
           }>
           <main className={poppins.className}>
             <Layout>
-              <ToastContainer position='top-center'   />
+              <ToastContainer position='top-center' />
               <Component {...pageProps} />
             </Layout>
           </main>

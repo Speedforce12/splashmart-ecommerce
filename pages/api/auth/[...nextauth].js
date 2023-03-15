@@ -47,6 +47,7 @@ export const authOptions = {
   },
   session: {
     strategy: "jwt",
+    maxAge: 1 * 24 * 60 * 60,
   },
 
   // All of this is just to add user information to be accessible for the app in the token/session
@@ -57,7 +58,8 @@ export const authOptions = {
           _id: user._id,
           email: user.email,
           role: user.role,
-          name: user.name
+          name: user.name,
+          image: user.avatar,
         };
       }
       return token;

@@ -9,6 +9,7 @@ import { IoLogInOutline } from "react-icons/io5";
 import { ClipLoader } from "react-spinners";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
@@ -40,11 +41,17 @@ const login = () => {
     const user = await signIn("credentials", {
       password: data.password,
       email: data.email,
-      redirect: true,
-      callbackUrl: "/"
+      redirect: false,
     });
     
-    console.log(user)
+    if (user?.error) {
+     toast.error(user?.error)
+    }
+
+      if (user?.ok) {
+        router.push("/");
+      }
+    
   };
 
   return (
@@ -127,14 +134,24 @@ const login = () => {
               </>
             )}
           </button>
-          <span className='mt-4 text-sm'>
-            Don't have an account?
-            <Link
-              href='/auth/register'
-              className='ml-1 tracking-tighter text-teal-600'>
-              Register
-            </Link>
-          </span>
+          <div className='flex items-center justify-between gap-10'>
+            <span className='mt-4 text-sm'>
+              Don't have an account?
+              <Link
+                href='/auth/register'
+                className='ml-1 tracking-tighter text-teal-600'>
+                Register
+              </Link>
+            </span>
+
+            <span className='mt-4 text-sm'>
+              <Link
+                href='/auth/reset-password'
+                className='ml-1 tracking-tighter text-teal-600'>
+                Forgot password?
+              </Link>
+            </span>
+          </div>
         </form>
       </div>
     </div>
