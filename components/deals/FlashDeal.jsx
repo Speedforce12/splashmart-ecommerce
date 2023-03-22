@@ -36,8 +36,8 @@ const FlashDeal = () => {
         id='flash'>
         <div className='flex snap-mandatory gap-5'>
           {flashData.map((flash) => (
-            <div>
-              <ProductCard flash={ flash} />
+            <div key={flash.id}>
+              <ProductCard flash={flash} />
             </div>
           ))}
         </div>

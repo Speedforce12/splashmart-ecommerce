@@ -29,7 +29,7 @@ const index = ({ user }) => {
                 {session?.user?.name}
               </h3>
               <span className='flex items-center gap-2 text-sm font-semibold text-black'>
-                Email:{" "}
+                Email:
                 <p className='text-sm font-medium text-gray-700'>
                   {session?.user?.email}
                 </p>

@@ -20,13 +20,22 @@ export const getProduct = async (id) => {
   }
 };
 
+export const deleteProduct = async (id) => {
+  try {
+    const response = await baseURL.delete(`/product/${id}`);
+    const product = response.data;
+    return product;
+  } catch (error) {
+    return error;
+  }
+};
 
 export const getProducts = async () => {
   try {
     const response = await baseURL.get("/products");
     const products = response.data;
-    return products
+    return products;
   } catch (error) {
     return error;
   }
-}
+};

@@ -37,8 +37,8 @@ const NewArrival = () => {
         id='new'>
         <div className='flex snap-mandatory gap-5'>
           {NewArrivalData.map((item) => (
-            <div>
-              <NewCard item={item} key={item.name} />
+            <div key={item.id}>
+              <NewCard item={item} />
             </div>
           ))}
         </div>
